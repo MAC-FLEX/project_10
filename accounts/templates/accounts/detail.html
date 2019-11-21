@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <br>
   {% for review in reviews %}
-    {{ review.movie.title }}
-    <hr>
+    <a href="{% url 'movies:detail' review.movie.pk %}"><h3>{{ review.movie.title }}</h3></a>
+    
     {{ review.score }} | {{ review.content }}
     <hr>
   {% endfor %}
 
   {% with followings=auth_user.followings.all followers=auth_user.followers.all %}
-    <p>
+    <h3>
     팔로잉: {{ followings|length }} |
     팔로워: {{ followers|length }}명
-    </p>
+    </h3>
     <hr>
     {% if user != auth_user %}
       {% if user in followers %}

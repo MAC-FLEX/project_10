@@ -25,19 +25,26 @@
   <hr>
   {% for review in reviews %}
     <div>
-      
+      평점 {{ review.score }}/ 댓글 {{ forloop.revcounter }} : {{ review.content }} / 작성자 : {{ review.user }}
+      {% if review.user == request.user %}
+        <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST" style="display: inline;">
+          {% csrf_token %}
+          <input type="submit" value="DELETE">
+        </form>
+      {% endif %}
     </div>
-  
+  {% empty %}
+    <p><b>댓글이 없습니다.</b></p>
   {% endfor %}
   {% if user.is_authenticated %}
   <hr>
     <form action="{% url 'movies:review_create' movie.pk %}" method="POST">
       {% csrf_token %}
-      {{ review_from }}
+      {{ review_form }}
       <input type="submit" value="submit">
     </form>
   {% else %}
-    <a href="#">[댓글을 작성하려면 로그인하세요.]</a>
+    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
   {% endif %}
   <hr>
 {% endblock %}

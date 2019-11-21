@@ -3,7 +3,7 @@
   <h1>MOVIE LIST</h1>
   {% for movie in movies %}
     <h1>{{ movie.title }}</h1>
-    <a href="#">
+    <a href="{% url 'movies:detail' movie.pk %}">
       <img src="{{movie.poster_url}}" alt="#" width="300px">
     </a>
   {% endfor %}
